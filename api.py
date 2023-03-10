@@ -58,13 +58,13 @@ def equipmentapc():
                 abort(400)
         
         resObj = request.json
-        unitsIdList = resObj["unitsIdList"]
+        unitsIdList = ""
         timeType = resObj["timeType"]
         
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
         level = "Equipment"
-        postBody = apcApi.ApcData(timeType,level)
+        postBody = apcApi.apcDataEquipmentApc(timeType,resObj)
         print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200

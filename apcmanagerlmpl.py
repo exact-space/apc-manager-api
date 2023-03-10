@@ -523,6 +523,41 @@ class apcManagerApi(apcManager):
         except:
             print(traceback.format_exc())
 
+    def getDataTagIdsFromResObj(self,resObj):
+        dataTagId = []
+        for tagmeta in resObj["tagmeta"]:
+            dataTagId.append(tagmeta["dataTagId"])
+
+        return dataTagId
+    
+    def getDataTagIdFromCalMeta(seld,calMeta):
+        dataTagIds = []
+        for cal in calMeta:
+            dataTagIds += cal["formula"]["v1"]
+        return dataTagIds
+    
+
+    def apcDataEquipmentApc(self,timeType,resObj):
+        self.getValidTimeFrame(timeType)
+        dataTagIds = self.getDataTagIdsFromResObj(resObj)
+        # print(dataTagIds)
+        calMeta = self.getCalForDel(dataTagIds)
+        dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
+
+        tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
+
+        uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
+        
+        postBody = json.loads(uldf.to_json(orient="records"))
+        postBody ={
+            "tagmeta" : tagmeta,
+            "data" : postBody
+        }
+        # print(json.dumps(postBody,indent=4))
+        return postBody
+        
+
+
 
     def apcDataIndividualTag(self,timeType):
         try:

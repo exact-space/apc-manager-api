@@ -77,7 +77,7 @@ class fetching():
             return body
         except:
             print(traceback.format_exc())
-
+    
 
     def getTagmetaFromDataTagId(self,dataTagId):
         try:
@@ -269,7 +269,10 @@ class fetching():
             for idx,response in enumerate(requests):
                 if response.status_code==200:
                     # print("got tagmeta successfully...")
-                    tagmeta.append(json.loads(response.content)[0])
+                    try:
+                        tagmeta.append(json.loads(response.content)[0])
+                    except:
+                        pass
                 else:
                     print("Not getting tagmeta SL Level successfully...")
                     print(response.status_code)
@@ -386,6 +389,39 @@ class fetching():
                 if response.status_code==200:
                     # print("got tagmeta successfully...")
                     tagmeta[self.unitsIdList[idx]] = json.loads(response.content)
+                else:
+                    print("Not getting tagmeta successfully...")
+                    print(response.status_code)
+                    print(response.content)
+            # print(tagmeta)
+            # print(time.time() - st)
+            return tagmeta
+        except:
+            print(traceback.format_exc())
+
+    
+    def getTagmetaForApiFromDataTagId(self,dataTagIdList):
+        try:
+            st = time.time()
+            urls=[]
+            fields = ["dataTagId","description","unitsId"]
+            for dataTagId in dataTagIdList:
+                query =  {
+                        "dataTagId" : dataTagId
+                }
+                urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + ',"fields":'+ json.dumps(fields) +'}'  
+                urls.append(urlQuery)
+                # print(urlQuery)
+            
+
+            rs = (grequests.get(u) for u in urls)
+            requests = grequests.map(rs)
+            
+            tagmeta = []
+            for idx,response in enumerate(requests):
+                if response.status_code==200:
+                    # print("got tagmeta successfully...")
+                    tagmeta.append(json.loads(response.content)[0])
                 else:
                     print("Not getting tagmeta successfully...")
                     print(response.status_code)
