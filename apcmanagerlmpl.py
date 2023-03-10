@@ -523,6 +523,7 @@ class apcManagerApi(apcManager):
         except:
             print(traceback.format_exc())
 
+
     def getDataTagIdsFromResObj(self,resObj):
         dataTagId = []
         for tagmeta in resObj["tagmeta"]:
@@ -537,7 +538,7 @@ class apcManagerApi(apcManager):
         return dataTagIds
     
 
-    def apcDataEquipmentApc(self,timeType,resObj):
+    def apcDataUsingTagmeta(self,timeType,resObj):
         self.getValidTimeFrame(timeType)
         dataTagIds = self.getDataTagIdsFromResObj(resObj)
         # print(dataTagIds)
@@ -547,7 +548,7 @@ class apcManagerApi(apcManager):
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
 
         uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
-        
+
         postBody = json.loads(uldf.to_json(orient="records"))
         postBody ={
             "tagmeta" : tagmeta,

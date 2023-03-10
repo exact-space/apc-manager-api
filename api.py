@@ -21,7 +21,7 @@ def unitapc():
         timeType = apcApi.getValidTimeType(timeType)
         level = "Unit"
         postBody = apcApi.ApcData(timeType,level)
-        print(json.dumps(postBody,indent=4))
+        # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
     except:
@@ -43,7 +43,7 @@ def systemapc():
         timeType = apcApi.getValidTimeType(timeType)
         level = "System"
         postBody = apcApi.ApcData(timeType,level)
-        print(json.dumps(postBody,indent=4))
+        # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
     except:
@@ -64,8 +64,8 @@ def equipmentapc():
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
         level = "Equipment"
-        postBody = apcApi.apcDataEquipmentApc(timeType,resObj)
-        print(json.dumps(postBody,indent=4))
+        postBody = apcApi.apcDataUsingTagmeta(timeType,resObj)
+        # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
     except:
@@ -80,19 +80,22 @@ def individualapc():
                 abort(400)
         
         resObj = request.json
-        unitsIdList = resObj["unitsIdList"]
+        unitsIdList = ""
         timeType = resObj["timeType"]
         
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
 
-        postBody = apcApi.apcDataIndividualTag(timeType)
-        print(json.dumps(postBody,indent=4))
+        postBody = apcApi.apcDataUsingTagmeta(timeType,resObj)
+        
+        # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
     except:
          print(traceback.format_exc())
          abort(400)
+
+
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', port=8081)
