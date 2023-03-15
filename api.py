@@ -6,6 +6,116 @@ from apcmanagerlmpl import apcManagerApi,json,traceback
 app = Flask(__name__)
 CORS(app)
 
+quries = {
+    "pafan": [
+        {
+            "measureProperty": "Primary Air",
+            "measureType": "Flow",
+            "equipment": "Pa Fan"
+        },
+        {
+            "measureProperty": "Bed",
+            "measureType": "Level",
+            "equipment": "Furnace"
+        },
+        {
+            "measureProperty": "Feed Water",
+            "measureType": "Differential Pressure",
+            "equipment": "Economizer"
+        },
+        {
+            "measureProperty": "Flue Gas",
+            "measureType": "O2",
+            "equipment": "Air Preheater"
+        }
+    ],
+    "fdfan": [
+        {
+            "measureProperty": "Feed Water",
+            "measureType": "Differential Pressure",
+            "equipment": "Economizer"
+        },
+        {
+            "measureProperty": "Secondary Air",
+            "measureType": "Flow",
+            "equipment": "Fd Fan"
+        },
+        {
+            "measureProperty": "Secondary Air",
+            "measureType": "Pressure",
+            "equipment": "Fd Fan"
+        },
+        {
+            "measureProperty": "Flue Gas",
+            "measureType": "O2",
+            "equipment": "Air Preheater"
+        }
+    ],
+    "safan": [
+        {
+            "measureProperty": "Feed Water",
+            "measureType": "Differential Pressure",
+            "equipment": "Economizer"
+        },
+        {
+            "measureProperty": "Secondary Air",
+            "measureType": "Flow",
+            "equipment": "Sa Fan"
+        },
+        {
+            "measureProperty": "Secondary Air",
+            "measureType": "Pressure",
+            "equipment": "Sa Fan"
+        },
+        {
+            "measureProperty": "Flue Gas",
+            "measureType": "O2",
+            "equipment": "Air Preheater"
+        }
+    ],
+    "idfan": [
+        {
+            "measureProperty": "Flue Gas",
+            "measureType": "O2",
+            "equipment": "Air Preheater"
+        },
+        {
+            "measureProperty": "Furnace",
+            "measureType": "Pressure",
+            "equipment": "Furnace"
+        },
+        {
+            "measureProperty": "Air",
+            "measureType": "Ingress Constant",
+            "equipment": "Performance Kpi"
+        },
+        {
+            "measureType": "Temperature",
+            "equipment": "Id Fan",
+            "measureLocation": "Inlet"
+        }
+    ],
+    "pulverizer": [
+        {
+            "measureProperty": "Fuel",
+            "measureType": "Flow",
+            "equipment": "Pulverizer"
+        },
+        {
+            "measureProperty": "Primary Air",
+            "measureType": "Flow",
+            "equipment": "Pulverizer"
+        }
+    ],
+    "generator": [
+        {
+            "measureProperty": "Power",
+            "measureType": "Current",
+            "equipment": "Generator"
+        }
+    ]
+}
+
 
 @app.route("/apcmanager/unitapc",methods= ["POST"])
 def unitapc():
@@ -15,7 +125,7 @@ def unitapc():
         
         resObj = request.json
         unitsIdList = resObj["unitsIdList"]
-        timeType = resObj["timeType"]
+        timeType = resObj["timeType"].lower()
         
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
@@ -37,7 +147,7 @@ def systemapc():
         
         resObj = request.json
         unitsIdList = resObj["unitsIdList"]
-        timeType = resObj["timeType"]
+        timeType = resObj["timeType"].lower()
         
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
@@ -59,7 +169,7 @@ def equipmentapc():
         
         resObj = request.json
         unitsIdList = ""
-        timeType = resObj["timeType"]
+        timeType = resObj["timeType"].lower()
         
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
@@ -77,11 +187,11 @@ def equipmentapc():
 def individualapc():
     try:
         if not request.json:
-                abort(400)
+            abort(400)
         
         resObj = request.json
         unitsIdList = ""
-        timeType = resObj["timeType"]
+        timeType = resObj["timeType"].lower()
         
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
@@ -94,6 +204,30 @@ def individualapc():
     except:
          print(traceback.format_exc())
          abort(400)
+
+@app.route("/apcmanager/apcrelatedtags",methods= ["POST"])
+def apcrelatedtags():
+     try:
+        if not request.json:
+            abort(400)
+
+        resObj = request.json
+        unitsIdList = ""
+        timeType = resObj["timeType"].lower()
+
+        tagmeta = resObj["tagmeta"]
+        apcApi = apcManagerApi(unitsIdList)
+        
+        postBody = apcApi.finalApcRealtedTags(timeType,tagmeta,quries)
+
+        print(json.dumps(postBody,indent=4))
+
+        return json.dumps(postBody),200
+
+     except:
+          print(traceback.format_exc())
+          abort(400)
+
 
 
 

@@ -118,7 +118,7 @@ class fetching():
                 if not field:
                     urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + '}'  
                 else:
-                    fields = ["dataTagId","description","unitsId"]
+                    fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName"]
                     urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + ',"fields":'+ json.dumps(fields) +'}'  
  
 
@@ -370,7 +370,8 @@ class fetching():
         try:
             st = time.time()
             urls=[]
-            fields = ["dataTagId","description","unitsId"]
+            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName"]
+
             for unitsId in self.unitsIdList:
                 query =  {
                     "unitsId":unitsId,
@@ -404,7 +405,8 @@ class fetching():
         try:
             st = time.time()
             urls=[]
-            fields = ["dataTagId","description","unitsId"]
+            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName"]
+
             for dataTagId in dataTagIdList:
                 query =  {
                         "dataTagId" : dataTagId
@@ -433,6 +435,39 @@ class fetching():
             print(traceback.format_exc())
 
 
-    
+    def getTagmetaForApiFromQuries(self,quries):
+        try:
+            st = time.time()
+            urls=[]
+            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName"]
+
+            for query in quries:
+                
+                urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + ',"fields":'+ json.dumps(fields) +'}'  
+                urls.append(urlQuery)
+                # print(urlQuery)
+            
+
+            rs = (grequests.get(u) for u in urls)
+            requests = grequests.map(rs)
+            
+            tagmeta = []
+            for idx,response in enumerate(requests):
+                if response.status_code==200:
+                    # print("got tagmeta successfully...")
+                    meta = json.loads(response.content)
+                    if len(meta) > 0:
+                        tagmeta.append(meta)
+                        
+                else:
+                    print("Not getting tagmeta successfully...")
+                    print(response.status_code)
+                    print(response.content)
+            # print(tagmeta)
+            # print(time.time() - st)
+            return tagmeta
+        except:
+            print(traceback.format_exc())
+
 
     # ----------------------------- apc api related end ----------------- #

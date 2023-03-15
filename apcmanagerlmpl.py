@@ -556,27 +556,85 @@ class apcManagerApi(apcManager):
         }
         # print(json.dumps(postBody,indent=4))
         return postBody
+    
+
+    def getDataTagIdFromMetaV2(self,tagmeta):
+        dataTagIdLst= []
+        returnlst = []
+        for lst in tagmeta:
+            lst2 = []
+            for tag in lst:
+                dataTagIdLst.append(tag["dataTagId"])
+                lst2.append(tag)
+            returnlst.append(lst2)
+
+        return dataTagIdLst,returnlst
+    
+
+    def getValidParamForQuries(self,tagmeta):
+        try:
+            returnDict = {}
+            for tagm in  tagmeta:
+                eqp = tagm["equipment"].replace(" ","").lower() + "_" + tagm["systemName"] + "_" + tagm["unitsId"]
+                if eqp not in returnDict:
+                    returnDict[eqp] = {
+                        "unitsId":tagm["unitsId"],
+                        "systemName" : tagm["systemName"]
+                    }
+
+            return returnDict
+        except:
+            print(traceback.format_exc())
+
+
+    def getFinalQuries(self,quries,quries2):
+        try:
+            # print(json.dumps(quries2,indent=4))
+            returnlst = []
+            for query2 in quries2:
+                eqpname = query2.split("_")[0]
+                for query in quries[eqpname]:
+                    
+                    # if "equipment" in query:
+                    #     copyDict = quries2[query2].copy()
+                    #     del copyDict["equipment"]
+                    #     query3 = {**query,**copyDict}
+
+                    # else:
+                        # query3 = {**query,**quries2[query2]}
+
+                    query3 = {**query,**quries2[query2]}
+                    returnlst.append(query3)
+                    
+            return returnlst
         
+        except:
+            print(traceback.format_exc())
 
 
-
-    def apcDataIndividualTag(self,timeType):
+    def apcDataRelatedTags(self,timeType,quries):
         try:
             self.getValidTimeFrame(timeType)
-            tagmeta = self.getTagmetaFromUnitsId(self.unitsIdList,True)
-            dataTagIdList,uiTagmeta = self.getDataTagIdFromMeta(tagmeta)
+            tagmeta = self.getTagmetaForApiFromQuries(quries)
+            # print(tagmeta)
+            dataTagIdList,uiTagmeta = self.getDataTagIdFromMetaV2(tagmeta)
+            
             uldf = self.getValuesV2(list(set(dataTagIdList)),self.startTimeStamp,self.endTimeStamp,timeType)
             postBody = json.loads(uldf.to_json(orient="records"))
             postBody ={
                 "tagmeta" : uiTagmeta,
                 "data" : postBody
             }
-            print(json.dumps(postBody,indent=4))
+            # print(json.dumps(postBody,indent=4))
             return postBody
-        
         except:
             print(traceback.format_exc())
         
 
+    def finalApcRealtedTags(self,timeType,tagmeta,quries):
+        quries2 = self.getValidParamForQuries(tagmeta)
+        finalQuries = self.getFinalQuries(quries,quries2)
+        timeType = self.getValidTimeType(timeType)
+        return self.apcDataRelatedTags(timeType,finalQuries)
     
 
