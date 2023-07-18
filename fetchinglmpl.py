@@ -370,7 +370,7 @@ class fetching():
         try:
             st = time.time()
             urls=[]
-            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName"]
+            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName","measureUnit"]
 
             for unitsId in self.unitsIdList:
                 query =  {
@@ -405,7 +405,7 @@ class fetching():
         try:
             st = time.time()
             urls=[]
-            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName"]
+            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName","measureUnit"]
 
             for dataTagId in dataTagIdList:
                 query =  {
@@ -439,7 +439,7 @@ class fetching():
         try:
             st = time.time()
             urls=[]
-            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName"]
+            fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName","measureUnit"]
 
             for query in quries:
                 

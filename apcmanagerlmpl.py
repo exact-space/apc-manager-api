@@ -592,7 +592,7 @@ class apcManagerApi(apcManager):
             # print(json.dumps(quries2,indent=4))
             returnlst = []
             for query2 in quries2:
-                eqpname = query2.split("_")[0]
+                eqpname = query2.split("_")[0].lower()
                 for query in quries[eqpname]:
                     
                     # if "equipment" in query:
