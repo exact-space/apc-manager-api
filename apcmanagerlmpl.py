@@ -15,16 +15,15 @@ import itertools
 import traceback
 from fetchinglmpl import fetching
 
-try:
-    import platform
-    version = platform.python_version().split(".")[0]
-    if version == "3":
-        import app_config.app_config as cfg
-    elif version == "2":
-        import app_config as cfg
-    config = cfg.getconfig()
-except:
-    from config import *
+
+import platform
+version = platform.python_version().split(".")[0]
+if version == "3":
+    import app_config.app_config as cfg
+elif version == "2":
+    import app_config as cfg
+config = cfg.getconfig()
+
 
 
 
