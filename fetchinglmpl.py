@@ -366,7 +366,7 @@ class fetching():
             return pd.DataFrame()
 
 
-    def getTagmetaForApi(self,apcName):
+    def getTagmetaForApi(self,apcName,measureType):
         try:
             st = time.time()
             urls=[]
@@ -375,7 +375,8 @@ class fetching():
             for unitsId in self.unitsIdList:
                 query =  {
                     "unitsId":unitsId,
-                    "measureType": apcName + " Apc"
+                    "measureProperty": apcName + " Apc",
+                    "measureType" : measureType
                 }
                 urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + ',"fields":'+ json.dumps(fields) +'}'  
                 urls.append(urlQuery)

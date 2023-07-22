@@ -130,7 +130,7 @@ def unitapc():
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
         level = "Unit"
-        postBody = apcApi.ApcData(timeType,level)
+        postBody = apcApi.ApcData(timeType,level,"Sum")
         # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
@@ -152,7 +152,7 @@ def systemapc():
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
         level = "System"
-        postBody = apcApi.ApcData(timeType,level)
+        postBody = apcApi.ApcData(timeType,level,"Sum")
         # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200

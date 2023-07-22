@@ -504,11 +504,12 @@ class apcManagerApi(apcManager):
             return desc
         
 
-    def ApcData(self,timeType,level):
+    def ApcData(self,timeType,level,measureType):
         try:
             self.getValidTimeFrame(timeType)
             # print(startTimeStamp,endTimeStamp)
-            tagmeta = self.getTagmetaForApi(level)
+            tagmeta = self.getTagmetaForApi(level,measureType)
+            # print(json.dumps(tagmeta,indent=4))
             dataTagIdList,uiTagmeta = self.getDataTagIdFromMeta(tagmeta)
             # descList = self.getDescriptionFromMeta(tagmeta)
             uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
@@ -517,7 +518,8 @@ class apcManagerApi(apcManager):
                 "tagmeta" : uiTagmeta,
                 "data" : postBody
             }
-            # print(json.dumps(postBody,indent=4))
+            print(json.dumps(postBody,indent=4))
+
             return postBody
         except:
             print(traceback.format_exc())
