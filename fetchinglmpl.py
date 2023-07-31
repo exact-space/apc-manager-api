@@ -291,6 +291,7 @@ class fetching():
     def getValuesV2(self,tagList,startTime, endTime,unit):
         try:
             # print(unit)
+            tagList = list(set(tagList))
             url = config["api"]["query"]
             metrics = []
             for tag in tagList:
@@ -424,6 +425,8 @@ class fetching():
             for idx,response in enumerate(requests):
                 if response.status_code==200:
                     # print("got tagmeta successfully...")
+                    # print(response.url)
+                    # print(response.content)
                     tagmeta.append(json.loads(response.content)[0])
                 else:
                     print("Not getting tagmeta successfully...")

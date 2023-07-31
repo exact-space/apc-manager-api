@@ -11,17 +11,33 @@ print(res)
 if type(res) == list:
     res = res[0]
 time.sleep(10)
+
 body.update(res)
 apiName = "/apcmanager/systemapc"
-print(body)
+# print(body)
 wholeUrl = baseUrl + apiName
 res = requests.post(wholeUrl,json=body).json()
-
+print(res)
 if type(res) == list:
     res = res[0]
 time.sleep(10)
+
 body.update(res)
 apiName = "/apcmanager/equipmentapc"
-print(body)
+# print(body)
 wholeUrl = baseUrl + apiName
 res = requests.post(wholeUrl,json=body).json()
+print(res)
+if type(res) == list:
+    res = res[0]
+time.sleep(10)
+
+body.update(res)
+apiName = "/apcmanager/individualapc"
+# print(body)
+wholeUrl = baseUrl + apiName
+res = requests.post(wholeUrl,json=body).json()
+print(res)
+if type(res) == list:
+    res = res[0]
+time.sleep(10)

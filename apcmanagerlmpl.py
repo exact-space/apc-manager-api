@@ -511,6 +511,7 @@ class apcManagerApi(apcManager):
             tagmeta = self.getTagmetaForApi(level,measureType)
             # print(json.dumps(tagmeta,indent=4))
             dataTagIdList,uiTagmeta = self.getDataTagIdFromMeta(tagmeta)
+            dataTagIdList = list(set(dataTagIdList))
             # descList = self.getDescriptionFromMeta(tagmeta)
             uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
             postBody = json.loads(uldf.to_json(orient="records"))
@@ -535,16 +536,19 @@ class apcManagerApi(apcManager):
     def getDataTagIdFromCalMeta(seld,calMeta):
         dataTagIds = []
         for cal in calMeta:
-            dataTagIds += cal["formula"]["v1"]
+            if type(cal["formula"]["v1"]) == list:
+                dataTagIds += cal["formula"]["v1"]
+            else:
+                dataTagIds +=[ cal["formula"]["v1"],cal["formula"]["v2"]]
         return dataTagIds
     
 
     def apcDataUsingTagmeta(self,timeType,resObj):
         self.getValidTimeFrame(timeType)
         dataTagIds = self.getDataTagIdsFromResObj(resObj)
-        # print(dataTagIds)
         calMeta = self.getCalForDel(dataTagIds)
         dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
+        print(dataTagIds)
 
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
 
