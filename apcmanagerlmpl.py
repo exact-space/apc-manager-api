@@ -548,7 +548,7 @@ class apcManagerApi(apcManager):
         dataTagIds = self.getDataTagIdsFromResObj(resObj)
         calMeta = self.getCalForDel(dataTagIds)
         dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
-        print(dataTagIds)
+        
 
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
 
