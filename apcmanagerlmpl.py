@@ -526,6 +526,42 @@ class apcManagerApi(apcManager):
             print(traceback.format_exc())
 
 
+    def ApcDataPerc(self,timeType,level,measureType):
+        try:
+            self.getValidTimeFrame(timeType)
+            # print(startTimeStamp,endTimeStamp)
+            tagmeta = self.getTagmetaForApi(level,measureType)
+            # print(json.dumps(tagmeta,indent=4))
+            dataTagIdList,uiTagmeta = self.getDataTagIdFromMeta(tagmeta)
+            dataTagIdList = list(set(dataTagIdList))
+            # descList = self.getDescriptionFromMeta(tagmeta)
+            # lloadQuery = {
+            #         "unitsId" : self.unitsIdList[0],
+            #         "measureInstance" : 1,
+            #         "equipment" : "Generator",
+            #         "system" : "Generator System",
+            #         "measureType" : "Load",
+            #         "measureProperty" : "Power"
+            #     }
+            
+            # loadTag = self.getTagMeta(lloadQuery,True)
+            
+            uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
+            
+            uldf[dataTagIdList[0]] = uldf[dataTagIdList[0]]/10
+            # print(uldf)
+
+            postBody = json.loads(uldf.to_json(orient="records"))
+            postBody ={
+                "tagmeta" : uiTagmeta,
+                "data" : postBody
+            }
+            print(json.dumps(postBody,indent=4))
+            return postBody
+        except:
+            print(traceback.format_exc())
+
+
     def getDataTagIdsFromResObj(self,resObj):
         dataTagId = []
         for tagmeta in resObj["tagmeta"]:

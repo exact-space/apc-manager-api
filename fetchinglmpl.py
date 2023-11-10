@@ -32,6 +32,44 @@ class fetching():
 
 
     # --------------------------- apc meta related start -------------------- #
+    def getResponseBody(self,response,word="",printa=False):
+        try:
+            if(response.status_code==200):
+                if printa:
+                    print(f"Got {word} successfully.....")
+
+                body = json.loads(response.content)
+                if type(body) != list:
+                    body = [body]
+                
+            else:
+                body =[]
+                print(f"Did not get{word} successfully.....")
+                print(response.status_code)
+                print(response.content)
+            return body
+        except:
+            print(traceback.format_exc())
+
+
+    def getTagMeta(self,query,retrunAsList = False):
+        try:
+            urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + '}'
+            # print(urlQuery)
+            response = requests.get(urlQuery)
+            word = "tagmeta"
+            body = self.getResponseBody(response,word,1)
+            if retrunAsList:
+                returnLst = []
+                for i in body:
+                    returnLst.append(i["dataTagId"])
+                return returnLst
+            else:
+                return body
+        except:
+            print(traceback.format_exc())
+
+
     def getUnitName(self,unitsId):
         try:
             query = {

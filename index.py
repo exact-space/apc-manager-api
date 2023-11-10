@@ -117,6 +117,7 @@ quries = {
 }
 
 
+
 @app.route("/apcmanager/unitapc",methods= ["POST"])
 def unitapc():
     try:
@@ -130,7 +131,22 @@ def unitapc():
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
         level = "Unit"
-        postBody = apcApi.ApcData(timeType,level,"Sum")
+        
+        msfQuery = {
+                "unitsId" : unitsIdList[0],
+                "measureInstance" : 1,
+                "equipment" : "Final Superheater",
+                "measureType" : "Flow",
+                "measureProperty" : "Main Steam"
+            }
+                    
+        msf = apcApi.getTagMeta(msfQuery)
+        if len(unitsIdList) == 1 and len(msf) == 1:
+            postBody = apcApi.ApcDataPerc(timeType,level,"Sum")
+
+        else:
+             postBody = apcApi.ApcData(timeType,level,"Sum")
+
         # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
