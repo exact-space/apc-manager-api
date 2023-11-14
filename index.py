@@ -142,10 +142,13 @@ def unitapc():
                     
         msf = apcApi.getTagMeta(msfQuery)
         if len(unitsIdList) == 1 and len(msf) == 1:
+            print("using percentages...")
             postBody = apcApi.ApcDataPerc(timeType,level,"Sum")
 
         else:
-             postBody = apcApi.ApcData(timeType,level,"Sum")
+            print("Not using percentages...")
+            
+            postBody = apcApi.ApcData(timeType,level,"Sum")
 
         # print(json.dumps(postBody,indent=4))
 

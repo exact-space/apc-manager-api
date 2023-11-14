@@ -3,7 +3,6 @@ warnings.filterwarnings('ignore')
 import pandas as pd
 import numpy as np
 import json
-import requests
 import grequests
 import os
 import datetime
@@ -13,17 +12,9 @@ import math
 import sys
 import itertools
 import traceback
-from fetchinglmpl import fetching
+from fetchinglmpl import fetching,config
 
-
-import platform
-version = platform.python_version().split(".")[0]
-if version == "3":
-    import app_config.app_config as cfg
-elif version == "2":
-    import app_config as cfg
-config = cfg.getconfig()
-
+import requests
 
 
 

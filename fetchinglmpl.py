@@ -14,16 +14,17 @@ import sys
 import itertools
 import traceback
 
-try:
-    import platform
-    version = platform.python_version().split(".")[0]
-    if version == "3":
-        import app_config.app_config as cfg
-    elif version == "2":
-        import app_config as cfg
-    config = cfg.getconfig()
-except:
-    from config import *
+
+import platform
+version = platform.python_version().split(".")[0]
+if version == "3":
+    import app_config.app_config as cfg
+elif version == "2":
+    import app_config as cfg
+config = cfg.getconfig()
+
+config["api"]["meta"] = config["api"]["meta"].replace("10.0.0.14","10.36.44.48")
+config["api"]["query"] = config["api"]["query"].replace("10.0.0.14","10.36.44.48")
 
 
 class fetching():
@@ -46,7 +47,9 @@ class fetching():
                 body =[]
                 print(f"Did not get{word} successfully.....")
                 print(response.status_code)
-                print(response.content)
+                print(response.url)
+
+                # print(response.content)
             return body
         except:
             print(traceback.format_exc())
@@ -88,7 +91,9 @@ class fetching():
                 body =[]
                 print("Did not get unit name successfully.....")
                 print(response.status_code)
-                print(response.content)
+                print(response.url)
+
+                # print(response.content)
             return body
         except:
             print(traceback.format_exc())
@@ -111,7 +116,9 @@ class fetching():
                 body =[]
                 print("Did not get calculations successfully.....")
                 print(response.status_code)
-                print(response.content)
+                print(response.url)
+
+                # print(response.content)
             return body
         except:
             print(traceback.format_exc())
@@ -134,7 +141,9 @@ class fetching():
                 body =[]
                 print("Did not get tagmeta successfully.....")
                 print(response.status_code)
-                print(response.content)
+                print(response.url)
+
+                # print(response.content)
             return body
         except:
             print(traceback.format_exc())
@@ -175,7 +184,8 @@ class fetching():
                 else:
                     print("Not getting tagmeta SL Level successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+                    # print(response.content)
             # print(tagmeta)
             return tagmeta
     
@@ -207,7 +217,9 @@ class fetching():
                 else:
                     print("Not getting tagmeta successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+
+                    # print(response.content)
             # print(tagmeta)
             return tagmeta
         except:
@@ -240,7 +252,9 @@ class fetching():
                 else:
                     print("Not getting tagmeta successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+
+                    # print(response.content)
             # print(tagmeta)
             return tagmeta
         except:
@@ -278,7 +292,8 @@ class fetching():
                 else:
                     print("Not getting tagmeta SL Level successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+                    # print(response.content)
             # print(tagmeta)
             return tagmeta
         
@@ -314,7 +329,9 @@ class fetching():
                 else:
                     print("Not getting tagmeta SL Level successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+
+                    # print(response.content)
             # print(tagmeta)
             return tagmeta
         
@@ -331,6 +348,7 @@ class fetching():
             # print(unit)
             tagList = list(set(tagList))
             url = config["api"]["query"]
+            print(url)
             metrics = []
             for tag in tagList:
                 tagDict = {
@@ -433,7 +451,8 @@ class fetching():
                 else:
                     print("Not getting tagmeta successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+                    # print(response.content)
             # print(tagmeta)
             # print(time.time() - st)
             return tagmeta
@@ -469,7 +488,9 @@ class fetching():
                 else:
                     print("Not getting tagmeta successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+
+                    # print(response.content)
             # print(tagmeta)
             # print(time.time() - st)
             return tagmeta
@@ -504,7 +525,9 @@ class fetching():
                 else:
                     print("Not getting tagmeta successfully...")
                     print(response.status_code)
-                    print(response.content)
+                    print(response.url)
+
+                    # print(response.content)
             # print(tagmeta)
             # print(time.time() - st)
             return tagmeta
