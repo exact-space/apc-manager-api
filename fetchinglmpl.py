@@ -23,8 +23,8 @@ elif version == "2":
     import app_config as cfg
 config = cfg.getconfig()
 
-config["api"]["meta"] = config["api"]["meta"].replace("10.0.0.14","10.36.44.48")
-config["api"]["query"] = config["api"]["query"].replace("10.0.0.14","10.36.44.48")
+# config["api"]["meta"] = config["api"]["meta"].replace("10.0.0.14","10.36.44.48")
+# config["api"]["query"] = config["api"]["query"].replace("10.0.0.14","10.36.44.48")
 
 
 class fetching():
