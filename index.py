@@ -132,7 +132,6 @@ def unitapc():
         timeType = apcApi.getValidTimeType(timeType)
         level = "Unit"
         
-        perc = False
         for unitsId in unitsIdList:
             msfQuery = {
                     "unitsId" : unitsId,
@@ -144,6 +143,7 @@ def unitapc():
                         
             msf = apcApi.getTagMeta(msfQuery)
             if len(msf) > 1:
+                 perc = False
                  break
             perc = True
         if perc:
