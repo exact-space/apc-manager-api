@@ -132,16 +132,21 @@ def unitapc():
         timeType = apcApi.getValidTimeType(timeType)
         level = "Unit"
         
-        msfQuery = {
-                "unitsId" : unitsIdList[0],
-                "measureInstance" : 1,
-                "equipment" : "Final Superheater",
-                "measureType" : "Flow",
-                "measureProperty" : "Main Steam"
-            }
-                    
-        msf = apcApi.getTagMeta(msfQuery)
-        if len(unitsIdList) == 1 and len(msf) == 1:
+        perc = False
+        for unitsId in unitsIdList:
+            msfQuery = {
+                    "unitsId" : unitsId,
+                    "measureInstance" : 1,
+                    "equipment" : "Final Superheater",
+                    "measureType" : "Flow",
+                    "measureProperty" : "Main Steam"
+                }
+                        
+            msf = apcApi.getTagMeta(msfQuery)
+            if len(msf) > 1:
+                 break
+            perc = True
+        if perc:
             print("using percentages...")
             postBody = apcApi.ApcDataPerc(timeType,level,"Sum")
 
