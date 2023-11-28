@@ -121,6 +121,7 @@ quries = {
 @app.route("/apcmanager/unitapc",methods= ["POST"])
 def unitapc():
     try:
+        global perc
         if not request.json:
                 abort(400)
         
@@ -166,9 +167,15 @@ def unitapc():
 @app.route("/apcmanager/systemapc",methods= ["POST"])
 def systemapc():
     try:
+        global perc
         if not request.json:
                 abort(400)
         
+        try:
+             perc
+        except:
+             perc = False
+             
         resObj = request.json
         unitsIdList = resObj["unitsIdList"]
         timeType = resObj["timeType"].lower()
@@ -176,7 +183,14 @@ def systemapc():
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
         level = "System"
-        postBody = apcApi.ApcData(timeType,level,"Sum")
+        if perc:
+            print("using percentages...")
+            postBody = apcApi.ApcDataPerc(timeType,level,"Sum")
+
+        else:
+            print("Not using percentages...")
+            
+            postBody = apcApi.ApcData(timeType,level,"Sum")
         # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
@@ -188,8 +202,14 @@ def systemapc():
 @app.route("/apcmanager/equipmentapc",methods= ["POST"])
 def equipmentapc():
     try:
+        global perc
         if not request.json:
                 abort(400)
+
+        try:
+             perc
+        except:
+             perc = False
         
         resObj = request.json
         unitsIdList = ""
@@ -198,7 +218,13 @@ def equipmentapc():
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
         level = "Equipment"
-        postBody = apcApi.apcDataUsingTagmeta(timeType,resObj)
+        if not perc:
+            print("Not using perc...")
+            postBody = apcApi.apcDataUsingTagmeta(timeType,resObj)
+        else:
+            print("using perc...")
+            postBody = apcApi.apcDataUsingTagmetaPerc(timeType,resObj)
+             
         # print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200

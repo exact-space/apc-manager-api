@@ -526,7 +526,6 @@ class apcManagerApi(apcManager):
             dataTagIdList,uiTagmeta = self.getDataTagIdFromMeta(tagmeta)
             for i in uiTagmeta:
                 i["measureUnit"] = "%"
-            print(uiTagmeta)
             dataTagIdList = list(set(dataTagIdList))
             # descList = self.getDescriptionFromMeta(tagmeta)
             # lloadQuery = {
@@ -542,7 +541,7 @@ class apcManagerApi(apcManager):
             
             uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
             
-            uldf[dataTagIdList[0]] = uldf[dataTagIdList[0]]/10
+            uldf[dataTagIdList] = uldf[dataTagIdList]/10
             # print(uldf)
 
             postBody = json.loads(uldf.to_json(orient="records"))
@@ -581,8 +580,31 @@ class apcManagerApi(apcManager):
         
 
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
+        uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
+
+        postBody = json.loads(uldf.to_json(orient="records"))
+        postBody ={
+            "tagmeta" : tagmeta,
+            "data" : postBody
+        }
+        # print(json.dumps(postBody,indent=4))
+        return postBody
+    
+
+    def apcDataUsingTagmetaPerc(self,timeType,resObj):
+        self.getValidTimeFrame(timeType)
+        dataTagIds = self.getDataTagIdsFromResObj(resObj)
+        calMeta = self.getCalForDel(dataTagIds)
+        dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
+        
+
+        tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
+
+        for i in tagmeta:
+            i["measureUnit"] = "%"
 
         uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
+        uldf[dataTagIds] = uldf[dataTagIds] / 10
 
         postBody = json.loads(uldf.to_json(orient="records"))
         postBody ={
