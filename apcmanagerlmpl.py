@@ -524,6 +524,9 @@ class apcManagerApi(apcManager):
             tagmeta = self.getTagmetaForApi(level,measureType)
             # print(json.dumps(tagmeta,indent=4))
             dataTagIdList,uiTagmeta = self.getDataTagIdFromMeta(tagmeta)
+            for i in uiTagmeta:
+                i["measureUnit"] = "%"
+            print(uiTagmeta)
             dataTagIdList = list(set(dataTagIdList))
             # descList = self.getDescriptionFromMeta(tagmeta)
             # lloadQuery = {
