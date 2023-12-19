@@ -26,6 +26,7 @@ config = cfg.getconfig()
 # config["api"]["meta"] = config["api"]["meta"].replace("10.0.0.14","10.36.44.48")
 # config["api"]["query"] = config["api"]["query"].replace("10.0.0.14","10.36.44.48")
 
+tagType = "apcManager"
 
 class fetching():
     def __init__(self,unitsIdList):
@@ -466,9 +467,10 @@ class fetching():
             urls=[]
             fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName","measureUnit"]
 
-            for dataTagId in dataTagIdList:
+            for dataTagId in set(dataTagIdList):
                 query =  {
-                        "dataTagId" : dataTagId
+                        "dataTagId" : dataTagId,
+                        "tagType" : tagType
                 }
                 urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + ',"fields":'+ json.dumps(fields) +'}'  
                 urls.append(urlQuery)
@@ -484,7 +486,13 @@ class fetching():
                     # print("got tagmeta successfully...")
                     # print(response.url)
                     # print(response.content)
-                    tagmeta.append(json.loads(response.content)[0])
+                    try:
+                        tagmeta.append(json.loads(response.content)[0])
+                    except:
+                        print("Not getting tagmeta successfully...")
+                        print(response.status_code)
+                        print(response.url)
+
                 else:
                     print("Not getting tagmeta successfully...")
                     print(response.status_code)

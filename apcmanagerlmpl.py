@@ -592,27 +592,29 @@ class apcManagerApi(apcManager):
     
 
     def apcDataUsingTagmetaPerc(self,timeType,resObj):
-        self.getValidTimeFrame(timeType)
-        dataTagIds = self.getDataTagIdsFromResObj(resObj)
-        calMeta = self.getCalForDel(dataTagIds)
-        dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
-        
+        try:
+            self.getValidTimeFrame(timeType)
+            dataTagIds = self.getDataTagIdsFromResObj(resObj)
+            calMeta = self.getCalForDel(dataTagIds)
+            dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
+            
 
-        tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
+            tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
+            for i in tagmeta:
+                i["measureUnit"] = "%"
 
-        for i in tagmeta:
-            i["measureUnit"] = "%"
+            uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
+            uldf[dataTagIds] = uldf[dataTagIds] / 10
 
-        uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
-        uldf[dataTagIds] = uldf[dataTagIds] / 10
-
-        postBody = json.loads(uldf.to_json(orient="records"))
-        postBody ={
-            "tagmeta" : tagmeta,
-            "data" : postBody
-        }
-        # print(json.dumps(postBody,indent=4))
-        return postBody
+            postBody = json.loads(uldf.to_json(orient="records"))
+            postBody ={
+                "tagmeta" : tagmeta,
+                "data" : postBody
+            }
+            # print(json.dumps(postBody,indent=4))
+            return postBody
+        except:
+            tr()
     
 
     def getDataTagIdFromMetaV2(self,tagmeta):

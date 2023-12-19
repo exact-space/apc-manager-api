@@ -248,7 +248,7 @@ def individualapc():
 
         postBody = apcApi.apcDataUsingTagmeta(timeType,resObj)
         
-        # print(json.dumps(postBody,indent=4))
+        print(json.dumps(postBody,indent=4))
 
         return json.dumps(postBody),200
     except:
