@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-from apcmanagerlmpl import apcManagerApi,json,traceback
+from apcmanagerlmpl import apcManagerApi,json,traceback,time
 
 
 app = Flask(__name__)
@@ -240,13 +240,15 @@ def individualapc():
             abort(400)
         
         resObj = request.json
+        
+        
         unitsIdList = ""
         timeType = resObj["timeType"].lower()
         
         apcApi = apcManagerApi(unitsIdList)
         timeType = apcApi.getValidTimeType(timeType)
 
-        postBody = apcApi.apcDataUsingTagmeta(timeType,resObj)
+        postBody = apcApi.apcDataUsingTagmeta(timeType,resObj,False)
         
         print(json.dumps(postBody,indent=4))
 

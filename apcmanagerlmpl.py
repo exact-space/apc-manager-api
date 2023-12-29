@@ -495,6 +495,18 @@ class apcManagerApi(apcManager):
             return desc
         
 
+    def hundredRule(self,df,tagList):
+        try:
+            print(df)
+            for tag in tagList:
+                idx = df[df[tag] > 100].index
+                df.loc[idx,tag] = 0
+                print(df)
+            return df
+        except:
+            print(traceback.format_exc())
+
+
     def ApcData(self,timeType,level,measureType):
         try:
             self.getValidTimeFrame(timeType)
@@ -505,6 +517,9 @@ class apcManagerApi(apcManager):
             dataTagIdList = list(set(dataTagIdList))
             # descList = self.getDescriptionFromMeta(tagmeta)
             uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
+            uldf = self.hundredRule(uldf,dataTagIdList)
+
+
             postBody = json.loads(uldf.to_json(orient="records"))
             postBody ={
                 "tagmeta" : uiTagmeta,
@@ -540,7 +555,9 @@ class apcManagerApi(apcManager):
             # loadTag = self.getTagMeta(lloadQuery,True)
             
             uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
+            uldf = self.hundredRule(uldf,dataTagIdList)
             
+
             uldf[dataTagIdList] = uldf[dataTagIdList]/10
             # print(uldf)
 
@@ -572,15 +589,20 @@ class apcManagerApi(apcManager):
         return dataTagIds
     
 
-    def apcDataUsingTagmeta(self,timeType,resObj):
+    def apcDataUsingTagmeta(self,timeType,resObj,hund = True):
         self.getValidTimeFrame(timeType)
         dataTagIds = self.getDataTagIdsFromResObj(resObj)
         calMeta = self.getCalForDel(dataTagIds)
         dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
-        
 
+        calMeta = self.getCalForDel(dataTagIds)
+        dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
+        
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
         uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
+
+        if hund:
+            uldf = self.hundredRule(uldf,dataTagIds)
 
         postBody = json.loads(uldf.to_json(orient="records"))
         postBody ={
@@ -604,6 +626,10 @@ class apcManagerApi(apcManager):
                 i["measureUnit"] = "%"
 
             uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
+            uldf = self.hundredRule(uldf,dataTagIds)
+
+
+
             uldf[dataTagIds] = uldf[dataTagIds] / 10
 
             postBody = json.loads(uldf.to_json(orient="records"))

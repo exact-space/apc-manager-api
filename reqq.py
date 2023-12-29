@@ -42,7 +42,7 @@ time.sleep(sleepTime)
 body.update(res)
 
 apiName = "/apcmanager/individualapc"
-body = {"tagmeta":[{"equipmentName":"Performance Kpi","measureUnit":"%","description":"BfpSystem Total System Apc","dataTagId":"LPG_a472_BfpSystem_1_Total_Power_Ratio","system":"Bfp System","systemName":"Bfp System","unitsId":"63349b9c749f3c3081c6a472","equipment":"Performance Kpi"}],"timeType":"daily"}
+# body = {"tagmeta":[{"equipmentName":"Performance Kpi","measureUnit":"%","description":"BfpSystem Total System Apc","dataTagId":"LPG_a472_BfpSystem_1_Total_Power_Ratio","system":"Bfp System","systemName":"Bfp System","unitsId":"63349b9c749f3c3081c6a472","equipment":"Performance Kpi"}],"timeType":"daily"}
 # print(body)
 wholeUrl = baseUrl + apiName
 res = requests.post(wholeUrl,json=body).json()
