@@ -581,11 +581,15 @@ class apcManagerApi(apcManager):
     
     def getDataTagIdFromCalMeta(seld,calMeta):
         dataTagIds = []
+        ExceptionList = ["HRD_30MKA10CE001.PV","HRD_30MKA10CE001.PV_HRD_B8_STM_FT_128AB.DACA.PV_ratio"]
         for cal in calMeta:
             if type(cal["formula"]["v1"]) == list:
+                
                 dataTagIds += cal["formula"]["v1"]
             else:
-                dataTagIds +=[ cal["formula"]["v1"],cal["formula"]["v2"]]
+                dataTagIds += [ cal["formula"]["v1"],cal["formula"]["v2"]]
+        
+        dataTagIds = [x for x in dataTagIds if x not in ExceptionList]
         return dataTagIds
     
 

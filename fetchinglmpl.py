@@ -26,7 +26,7 @@ config = cfg.getconfig()
 # config["api"]["meta"] = config["api"]["meta"].replace("10.0.0.14","10.36.44.48")
 # config["api"]["query"] = config["api"]["query"].replace("10.0.0.14","10.36.44.48")
 
-tagType = "apcManager"
+# tagType = "apcManager"
 
 class fetching():
     def __init__(self,unitsIdList):
@@ -470,7 +470,7 @@ class fetching():
             for dataTagId in set(dataTagIdList):
                 query =  {
                         "dataTagId" : dataTagId,
-                        "tagType" : tagType
+                        # "tagType" : tagType
                 }
                 urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + ',"fields":'+ json.dumps(fields) +'}'  
                 urls.append(urlQuery)
