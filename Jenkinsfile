@@ -79,7 +79,25 @@ pipeline {
             }
         }
         }
-        stage('deploying to thermax') {
+        stage('deploying to HRD') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                timeout(time: 15, unit: 'MINUTES') {
+                    httpRequest url: 'http://40.88.150.243:9001/hrd/deployservice/cicd/api/apc-manager-api', timeout: 900000
+                }
+            }
+        }
+        }
+        stage('deploying to LPG') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                timeout(time: 15, unit: 'MINUTES') {
+                    httpRequest url: 'http://40.88.150.243:9001/lpg/deployservice/cicd/api/apc-manager-api', timeout: 900000
+                }
+            }
+        }
+        }
+        /*stage('deploying to thermax') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 timeout(time: 15, unit: 'MINUTES') {
@@ -87,7 +105,7 @@ pipeline {
                 }
             }
         }
-        }
+        }*/
         stage('deploying to bhel') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {

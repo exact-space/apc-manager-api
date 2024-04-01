@@ -100,11 +100,6 @@ quries = {
             "measureProperty": "Fuel",
             "measureType": "Flow",
             "equipment": "Pulverizer"
-        },
-        {
-            "measureProperty": "Primary Air",
-            "measureType": "Flow",
-            "equipment": "Pulverizer"
         }
     ],
     "generator": [
