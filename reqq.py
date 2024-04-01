@@ -8,8 +8,8 @@ apiName = "/apcmanager/unitapc"
 
 wholeUrl = baseUrl + apiName
 
-body = {"unitsIdList":["63349b9c749f3c3081c6a472","635bb88abbf1fe000756dbfb"],"timeType":"daily"}#lpg5
-# body = {"unitsIdList":["635b6f9fef6a59000703f924"],"timeType":"daily"}#hrd3
+# body = {"unitsIdList":["63349b9c749f3c3081c6a472","635bb88abbf1fe000756dbfb"],"timeType":"daily"}#lpg5
+body = {"unitsIdList":["635b6f9fef6a59000703f924"],"timeType":"daily"}#hrd3
 res = requests.post(wholeUrl,json=body).json()
 print(res)
 if type(res) == list:

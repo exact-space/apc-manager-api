@@ -517,7 +517,6 @@ class apcManagerApi(apcManager):
             dataTagIdList = list(set(dataTagIdList))
             # descList = self.getDescriptionFromMeta(tagmeta)
             uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
-            uldf = self.hundredRule(uldf,dataTagIdList)
 
 
             postBody = json.loads(uldf.to_json(orient="records"))
@@ -603,11 +602,8 @@ class apcManagerApi(apcManager):
         dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
         # print(dataTagIds)
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
-        uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
-
-        if hund:
-            uldf = self.hundredRule(uldf,dataTagIds)
-
+        uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)        
+        
         postBody = json.loads(uldf.to_json(orient="records"))
         postBody ={
             "tagmeta" : tagmeta,
