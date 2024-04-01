@@ -601,7 +601,7 @@ class apcManagerApi(apcManager):
 
         calMeta = self.getCalForDel(dataTagIds)
         dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
-        
+        # print(dataTagIds)
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
         uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)
 

@@ -1,7 +1,7 @@
 import requests
 import json
 import time
-sleepTime = 2
+sleepTime = 4
 baseUrl = "http://10.36.141.34:8082"
 # baseUrl = "http://10.36.44.48:8082"
 apiName = "/apcmanager/unitapc"
