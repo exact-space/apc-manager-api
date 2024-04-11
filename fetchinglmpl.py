@@ -380,11 +380,15 @@ class fetching():
                 "metrics":metrics,
                 "plugins": [],
                 "cache_time": 0,
-                "start_absolute": startTime,
-                "end_absolute": endTime
+                # "start_absolute": startTime,
+                # "end_absolute": endTime
+                 "start_relative": {
+                        "value": "7",
+                        "unit": "days"
+                    }
 
             }
-        #     print(json.dumps(query,indent=4))
+            print(json.dumps(query,indent=4))
             res=requests.post(url=url, json=query)
             values=json.loads(res.content)
             finalDF = pd.DataFrame()
