@@ -17,7 +17,9 @@ from fetchinglmpl import fetching,config
 import requests
 
 
-
+def tr():
+    print(traceback.format_exc())
+    
 class posting(fetching):
     def postInTagmeta(self,postBody):
         sumTagName = postBody["dataTagId"]
@@ -516,12 +518,8 @@ class apcManagerApi(apcManager):
             dataTagIdList,uiTagmeta = self.getDataTagIdFromMeta(tagmeta)
             dataTagIdList = list(set(dataTagIdList))
             # descList = self.getDescriptionFromMeta(tagmeta)
-<<<<<<< HEAD
-            uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)
-=======
             uldf = self.getValuesV2(dataTagIdList,self.startTimeStamp,self.endTimeStamp,timeType)[-7:]
             uldf = self.hundredRule(uldf,dataTagIdList)
->>>>>>> c9f1dec (query change for fetching data)
 
 
             postBody = json.loads(uldf.to_json(orient="records"))
@@ -607,17 +605,12 @@ class apcManagerApi(apcManager):
         dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
         # print(dataTagIds)
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
-<<<<<<< HEAD
-        uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)        
-        
-=======
         uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)[-7:]
         
 
         if hund:
             uldf = self.hundredRule(uldf,dataTagIds)
 
->>>>>>> c9f1dec (query change for fetching data)
         postBody = json.loads(uldf.to_json(orient="records"))
         postBody ={
             "tagmeta" : tagmeta,
