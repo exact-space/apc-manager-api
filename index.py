@@ -148,7 +148,6 @@ def unitapc():
 
         else:
             print("Not using percentages...")
-            
             postBody = apcApi.ApcData(timeType,level,"Sum")
 
         # print(json.dumps(postBody,indent=4))

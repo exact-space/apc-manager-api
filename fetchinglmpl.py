@@ -26,6 +26,13 @@ config = {"api":{"meta":"http://10.1.0.10/exactapi","datapoints":"http://10.224.
 # config["api"]["meta"] = config["api"]["meta"].replace("10.0.0.14","10.36.44.48")
 # config["api"]["query"] = config["api"]["query"].replace("10.0.0.14","10.36.44.48")
 
+
+# Open the JSON file in read mode
+with open('mainConfig.json', 'r') as f:
+    # Load JSON data
+    mainConfig = json.load(f)
+
+# Now you can work with the 'data' variable, which contains the JSON dat
 tagType = "apcManager"
 
 class fetching():
