@@ -498,11 +498,11 @@ class apcManagerApi(apcManager):
         
 
     def hundredRule(self,df,tagList):
-        
         try:
-            if mainConfig[self.unitsIdList[0]]:
+            if mainConfig[self.unitsIdList[0]]["hundredRule"]:
                 # print(df)
                 for tag in tagList:
+                    print("using hundred rule..",self.unitsIdList[0])
                     idx = df[df[tag] > 100].index
                     df.loc[idx,tag] = 0
                     print(df)
