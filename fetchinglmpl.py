@@ -369,7 +369,8 @@ class fetching():
                                         "value": "1",
                                         "unit": unit
                                     },
-                                        "align_start_time": True
+                                        # "align_start_time": True
+                                        "align_end_time": True
                                     },
                                         {
                             "name": "gaps",
@@ -377,7 +378,8 @@ class fetching():
                                 "value": "1",
                                 "unit": unit
                             },
-                            "align_start_time": True
+                            # "align_start_time": True
+                            "align_end_time": True
                             }
                                 ]
                 }
@@ -387,12 +389,12 @@ class fetching():
                 "metrics":metrics,
                 "plugins": [],
                 "cache_time": 0,
-                "start_absolute": startTime,
-                "end_absolute": endTime
-                #  "start_relative": {
-                #         "value": "7",
-                #         "unit": "days"
-                #     }
+                # "start_absolute": startTime,
+                # "end_absolute": endTime
+                 "start_relative": {
+                        "value": "7",
+                        "unit": "days"
+                    }
 
             }
             # print(json.dumps(query,indent=4))
@@ -401,7 +403,7 @@ class fetching():
             finalDF = pd.DataFrame()
             for i in values["queries"]:
                 df = pd.DataFrame(i["results"][0]["values"],columns=["time",i["results"][0]["name"]])
-
+                df ["time"] = (df['time']/1000).astype(int)
                 try:
                     finalDF = pd.concat([finalDF,df.set_index("time")],axis=1)
                 except Exception as e:
@@ -413,9 +415,9 @@ class fetching():
             
             # if unit.lower() != "days":
             # finalDF['time'] = finalDF['time'] + 1*1000*60*60*24
-                
-            # print(finalDF['time'])
-            dates = pd.to_datetime(finalDF['time'],unit='ms')
+            # finalDF['time'] = (finalDF['time']/1000).astype(int)
+            
+            dates = pd.to_datetime(finalDF['time'],unit='s')
             datesMonth = dates.dt.month_name()
             datesYear = dates.dt.year
             datesDate = dates.dt.day
