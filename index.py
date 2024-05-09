@@ -148,6 +148,7 @@ def unitapc():
 
         else:
             print("Not using percentages...")
+            
             postBody = apcApi.ApcData(timeType,level,"Sum")
 
         # print(json.dumps(postBody,indent=4))
@@ -206,7 +207,7 @@ def equipmentapc():
              perc = False
         
         resObj = request.json
-        unitsIdList = ""
+        unitsIdList = [resObj["tagmeta"][0]["unitsId"]]
         timeType = resObj["timeType"].lower()
         
         apcApi = apcManagerApi(unitsIdList)
@@ -236,7 +237,7 @@ def individualapc():
         resObj = request.json
         
         
-        unitsIdList = ""
+        unitsIdList  = [resObj["tagmeta"][0]["unitsId"]]
         timeType = resObj["timeType"].lower()
         
         apcApi = apcManagerApi(unitsIdList)
@@ -258,7 +259,7 @@ def apcrelatedtags():
             abort(400)
 
         resObj = request.json
-        unitsIdList = ""
+        unitsIdList = [resObj["tagmeta"][0]["unitsId"]]
         timeType = resObj["timeType"].lower()
 
         tagmeta = resObj["tagmeta"]

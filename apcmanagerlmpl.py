@@ -498,9 +498,10 @@ class apcManagerApi(apcManager):
         
 
     def hundredRule(self,df,tagList):
+        
         try:
             if mainConfig[self.unitsIdList[0]]:
-                print(df)
+                # print(df)
                 for tag in tagList:
                     idx = df[df[tag] > 100].index
                     df.loc[idx,tag] = 0
@@ -508,6 +509,7 @@ class apcManagerApi(apcManager):
             return df
         except:
             print(traceback.format_exc())
+            return df
 
 
     def ApcData(self,timeType,level,measureType):

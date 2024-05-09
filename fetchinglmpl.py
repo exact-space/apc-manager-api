@@ -369,7 +369,7 @@ class fetching():
                                         "value": "1",
                                         "unit": unit
                                     },
-                                        "align_end_time": True
+                                        "align_start_time": True
                                     },
                                         {
                             "name": "gaps",
@@ -377,7 +377,7 @@ class fetching():
                                 "value": "1",
                                 "unit": unit
                             },
-                            "align_end_time": True
+                            "align_start_time": True
                             }
                                 ]
                 }
@@ -387,12 +387,12 @@ class fetching():
                 "metrics":metrics,
                 "plugins": [],
                 "cache_time": 0,
-                # "start_absolute": startTime,
-                # "end_absolute": endTime
-                 "start_relative": {
-                        "value": "7",
-                        "unit": "days"
-                    }
+                "start_absolute": startTime,
+                "end_absolute": endTime
+                #  "start_relative": {
+                #         "value": "7",
+                #         "unit": "days"
+                #     }
 
             }
             # print(json.dumps(query,indent=4))
@@ -427,7 +427,7 @@ class fetching():
                 
             finalDF['time'] = dates
             # print(dates)
-            # print(finalDF)
+            print(finalDF)
             return finalDF
         
         except Exception as e:
