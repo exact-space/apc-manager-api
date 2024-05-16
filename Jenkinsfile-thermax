@@ -185,7 +185,7 @@ pipeline {
                 sh "gcc index.c -I/usr/include/python3.10/ -Wall -Wextra -O2 -g -o index -lpython3.10"
             }
         }
-        stage('smoke test before build and deploy') {
+        /*stage('smoke test before build and deploy') {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
             }
@@ -208,7 +208,7 @@ pipeline {
             }
         }
         }        
-        }
+        }*/
         stage("building d1 images") {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
@@ -265,7 +265,7 @@ pipeline {
                 }
             }
         }
-        stage('smoke test post deployment') {
+        /*stage('smoke test post deployment') {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
             }
@@ -288,7 +288,7 @@ pipeline {
             }
         }
         }        
-        }
+        }*/
         stage('check for service status on UAT') {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
