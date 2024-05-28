@@ -10,5 +10,8 @@
     },
     "635bb88abbf1fe000756dbfb" : {
         "hundredRule" : true
+    },
+    "6375e28c32ebf700068ac0aa" : {
+        "hundredRule" : false
     }
 }

@@ -601,11 +601,13 @@ class apcManagerApi(apcManager):
     def apcDataUsingTagmeta(self,timeType,resObj,hund = True):
         self.getValidTimeFrame(timeType)
         dataTagIds = self.getDataTagIdsFromResObj(resObj)
+        # print(dataTagIds)
         calMeta = self.getCalForDel(dataTagIds)
         dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
+        # print(dataTagIds)
 
-        calMeta = self.getCalForDel(dataTagIds)
-        dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
+        # calMeta = self.getCalForDel(dataTagIds)
+        # dataTagIds = self.getDataTagIdFromCalMeta(calMeta)
         # print(dataTagIds)
         tagmeta = self.getTagmetaForApiFromDataTagId(dataTagIds)
         uldf = self.getValuesV2(dataTagIds,self.startTimeStamp,self.endTimeStamp,timeType)[-7:]

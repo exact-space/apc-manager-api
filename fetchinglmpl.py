@@ -433,6 +433,9 @@ class fetching():
             return finalDF
         
         except Exception as e:
+            print(res.status_code)
+            print(query)
+
             print(traceback.format_exc())
             return pd.DataFrame()
 
