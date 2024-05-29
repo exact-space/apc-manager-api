@@ -111,7 +111,7 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        def initialStatus = deploy("https://cpp.utclconnect.com/deployservice/cicd/${service_type}/$APP_NAME", 'UTCL_latest')
+                        def initialStatus = deploy("https://eiv8zsdaktab.share.zrok.io/deployservice/cicd/${service_type}/$APP_NAME", 'UTCL_latest')
                         initialStatus.name = 'UTCL_latest'
                         deploymentStatus['UTCL_latest'] = initialStatus ?: [result: 'FAILURE', message: 'Deployment failed']
                         deploymentStatusList << initialStatus
@@ -151,7 +151,7 @@ pipeline {
                 }
             }
         }
-        stage('deploying latestimage to BHEL') {
+        /*stage('deploying latestimage to BHEL') {
             when {
                  expression { return env.BRANCH_NAME == 'main' }
             }
@@ -165,7 +165,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('check for service status on Prod') {
             when {
                  expression { return env.BRANCH_NAME == 'main' }
@@ -188,7 +188,7 @@ pipeline {
             steps {
                 script {
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        def revertStatus = deploy("https://cpp.utclconnect.com/deployservice/cicd/${service_type}/revert/$APP_NAME", 'UTCL_revert')
+                        def revertStatus = deploy("https://eiv8zsdaktab.share.zrok.io/deployservice/cicd/${service_type}/revert/$APP_NAME", 'UTCL_revert')
                         revertStatus.name = 'UTCL_revert'
                         deploymentStatus['UTCL_revert'] = revertStatus ?: [result: 'FAILURE', message: 'Deployment failed']
                         deploymentStatusList << revertStatus
@@ -228,7 +228,7 @@ pipeline {
                 }
             }
         }
-        stage('check for service status on BHEL') {
+        /*stage('check for service status on BHEL') {
             when {
                  expression { return env.BRANCH_NAME == 'main' }
             }
@@ -242,7 +242,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
 // Develop Branch 
 
@@ -284,7 +284,7 @@ pipeline {
                 sh "gcc index.c -I/usr/include/python3.10/ -Wall -Wextra -O2 -g -o index -lpython3.10"
             }
         }
-        stage('smoke test before build and deploy') {
+        /*stage('smoke test before build and deploy') {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
             }
@@ -307,7 +307,7 @@ pipeline {
             }
         }
         }        
-        }
+        }*/
         stage("building d1 images") {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
@@ -355,7 +355,7 @@ pipeline {
                 }
             }
         }
-        stage('smoke test post deployment') {
+        /*stage('smoke test post deployment') {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
             }
@@ -378,7 +378,7 @@ pipeline {
             }
         }
         }        
-        }
+        }*/
         stage('check for service status on qa') {
             when {
                  expression { return env.BRANCH_NAME == 'develop' }
@@ -527,7 +527,7 @@ def createEmailBody(buildStartTime, buildEndTime, deploymentStatusList, deployme
     def dataCenters
 
     if (branchName == 'main') {
-        dataCenters = ['Prod_latest', 'UTCL_latest', 'HRD_latest', 'LPG_latest', 'BHEL_latest', 'Prod_revert', 'UTCL_revert', 'HRD_revert', 'LPG_revert', 'BHEL_revert']
+        dataCenters = ['Prod_latest', 'UTCL_latest', 'HRD_latest', 'LPG_latest', 'Prod_revert', 'UTCL_revert', 'HRD_revert', 'LPG_revert']
     } else if (branchName == 'develop') {
         dataCenters = ['qa_latest', 'qa_revert']
     } else if (branchName == 'sandbox') {
