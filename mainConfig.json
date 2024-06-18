@@ -11,6 +11,9 @@
     "635bb88abbf1fe000756dbfb" : {
         "hundredRule" : true
     },
+    "635219343e4a8c0006f29888" : {
+        "hundredRule" : false
+    },
     "6375e28c32ebf700068ac0aa" : {
         "hundredRule" : false,
         "Unit Apc" : {
@@ -50,6 +53,18 @@
                 },
                 {
                     "dataTagId" : "JSW_EspAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1B.CWPT_1"
+                },
+                {
+                    "dataTagId" : "JSW_C1A.COMPRESSOR_1A"
+                },
+                {
+                    "dataTagId" : "JSW_C1A.SST_1"
+                },
+                {
+                    "dataTagId" : "JSW_Transformer Loss_df"
                 }
             ]
         

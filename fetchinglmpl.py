@@ -379,7 +379,7 @@ class fetching():
                                     "name": "avg",
                                     "sampling": {
                                         "value": "1",
-                                        "unit": unit
+                                        "unit": "minutes"
                                     },
                                         # "align_start_time": True
                                         "align_end_time": True
@@ -388,7 +388,7 @@ class fetching():
                             "name": "gaps",
                             "sampling": {
                                 "value": "1",
-                                "unit": unit
+                                "unit": "minutes"
                             },
                             # "align_start_time": True
                             "align_end_time": True
@@ -430,18 +430,25 @@ class fetching():
             # finalDF['time'] = (finalDF['time']/1000).astype(int)
             
             dates = pd.to_datetime(finalDF['time'],unit='s')
+            
             datesMonth = dates.dt.month_name()
             datesYear = dates.dt.year
             datesDate = dates.dt.day
-            
+            finalDF["month"],finalDF["year"],finalDF["date"] = datesMonth,datesYear,datesDate
+
+            finalDF = finalDF.groupby(["date"]).mean().reset_index(drop=True)
+            dates = pd.to_datetime(finalDF['time'],unit='s')
+            datesMonth = dates.dt.month_name()
+            datesYear = dates.dt.year
+            datesDate = dates.dt.day
+
             if unit.lower() == "days" or unit.lower() == "weeks":
                 dates = [str(datesDate[idx])+"-"+x[:3]+"-"+str(datesYear[idx]) for idx,x in enumerate(datesMonth)]
             else:
                 dates = [x[:3]+"-"+str(datesYear[idx]) for idx,x in enumerate(datesMonth)]
                 
             finalDF['time'] = dates
-            # print(dates)
-            print(finalDF)
+            finalDF = finalDF[["time"] + tagList]
             return finalDF.round(2)
         
         except Exception as e:
