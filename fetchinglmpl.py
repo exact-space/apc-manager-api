@@ -442,7 +442,7 @@ class fetching():
             finalDF['time'] = dates
             # print(dates)
             print(finalDF)
-            return finalDF
+            return finalDF.round(2)
         
         except Exception as e:
             print(res.status_code)
