@@ -459,14 +459,21 @@ class fetching():
             fields = ["dataTagId","description","unitsId","system","systemName","equipment","equipmentName","measureUnit"]
             measureProperty = apcName + " Apc"
             for unitsId in self.unitsIdList:
-                if measureProperty in mainConfig[unitsId]:
-                    query = mainConfig[unitsId][measureProperty]
-                else:
+                try:
+                    if measureProperty in mainConfig[unitsId]:
+                        query = mainConfig[unitsId][measureProperty]
+                    else:
+                        query =  {
+                            "unitsId":unitsId,
+                            "measureProperty": apcName + " Apc",
+                            "measureType" : measureType
+                        }
+                except:
                     query =  {
-                        "unitsId":unitsId,
-                        "measureProperty": apcName + " Apc",
-                        "measureType" : measureType
-                    }
+                            "unitsId":unitsId,
+                            "measureProperty": apcName + " Apc",
+                            "measureType" : measureType
+                        }
                 urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + ',"fields":'+ json.dumps(fields) +'}'  
                 urls.append(urlQuery)
                 print(urlQuery)
