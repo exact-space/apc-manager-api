@@ -12,6 +12,47 @@
         "hundredRule" : true
     },
     "6375e28c32ebf700068ac0aa" : {
-        "hundredRule" : false
+        "hundredRule" : false,
+        "Unit Apc" : {
+            "tagType" : "apcManager",
+            "measureProperty" : "Power",
+            "measureType" : "Sum",
+            "equipment" : "Generator"
+        },
+        "System Apc" : {
+            "or" :[
+                {
+                    "dataTagId" : "JSW_U1BfpAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1CepAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1CwpAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1FdfAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1FdfAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1IdfAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1PafAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1MillAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_U1Unit Service TransformerAPC_sum"
+                },
+                {
+                    "dataTagId" : "JSW_EspAPC_sum"
+                }
+            ]
+        
+        }
     }
 }
