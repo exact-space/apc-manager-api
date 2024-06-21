@@ -78,7 +78,7 @@ class fetching():
     def getTagMeta(self,query,retrunAsList = False):
         try:
             urlQuery = config["api"]["meta"] + '/tagmeta?filter={"where":' + json.dumps(query) + '}'
-            # print(urlQuery)
+            print(urlQuery)
             response = requests.get(urlQuery)
             word = "tagmeta"
             body = self.getResponseBody(response,word,1)
@@ -421,9 +421,12 @@ class fetching():
                 except Exception as e:
                     print(e)
                     finalDF = pd.concat([finalDF,df],axis=1)
-
+            # print(finalDF)
+            # print(finalDF["time"])
             finalDF.reset_index(inplace=True)
-            finalDF.fillna(0,inplace=True)
+            finalDF["time"] = (finalDF["time"] + 1*60*60*5.5).astype(int)
+
+            # finalDF.fillna(0,inplace=True)
             
             # if unit.lower() != "days":
             # finalDF['time'] = finalDF['time'] + 1*1000*60*60*24
@@ -448,7 +451,9 @@ class fetching():
                 dates = [x[:3]+"-"+str(datesYear[idx]) for idx,x in enumerate(datesMonth)]
                 
             finalDF['time'] = dates
-            finalDF = finalDF[["time"] + tagList]
+            # finalDF = finalDF[["time"] + tagList]
+            finalDF.drop(["year"],axis = 1,inplace=True)
+            # print(finalDF)
             return finalDF.round(2)
         
         except Exception as e:

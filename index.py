@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-from apcmanagerlmpl import apcManagerApi,json,traceback,time
+from apcmanagerlmpl import apcManagerApi,json,traceback,time,mainConfig
 
 
 app = Flask(__name__)
@@ -128,20 +128,16 @@ def unitapc():
         timeType = apcApi.getValidTimeType(timeType)
         level = "Unit"
         
-        for unitsId in unitsIdList:
-            msfQuery = {
-                    "unitsId" : unitsId,
-                    "measureInstance" : 1,
-                    "equipment" : "Final Superheater",
-                    "measureType" : "Flow",
-                    "measureProperty" : "Main Steam"
-                }
-                        
-            msf = apcApi.getTagMeta(msfQuery)
-            if len(msf) > 1:
+        for unitId in unitsIdList:
+            try:
+                if "perc" in mainConfig[unitId]:
+                    perc = mainConfig[unitId]["perc"]
+            
+                else:
+                    perc = False
+            except:
                  perc = False
-                 break
-            perc = True
+
         if perc:
             print("using percentages...")
             postBody = apcApi.ApcDataPerc(timeType,level,"Sum")

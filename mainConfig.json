@@ -16,6 +16,7 @@
     },
     "6375e28c32ebf700068ac0aa" : {
         "hundredRule" : false,
+        "perc" : false,
         "Unit Apc" : {
             "tagType" : "apcManager",
             "measureProperty" : "Power",
@@ -69,5 +70,8 @@
             ]
         
         }
+    },
+    "60eb2fab454596520b33e6db" : {
+        "hundredRule" : false
     }
 }
