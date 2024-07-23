@@ -23,17 +23,17 @@ elif version == "2":
     import app_config as cfg
 config = cfg.getconfig()
 
-print("Manually importing configs...")
-config = {"api":{}}
-config["BROKER_ADDRESS"] = "data.exactspace.co"
-# config["BROKER_ADDRESS"] = "40.76.30.102"
-# config["BROKER_ADDRESS"] = "54.151.215.163"
-config["api"]["meta"] = "https://data.exactspace.co/exactapi"
-# config["api"]["query"] = "http://13.68.199.3/api/v1/datapoints/query"
-config["api"]["query"] = "https://data.exactspace.co/api/v1/datapoints/query"
-# config["api"]["datapoints"] = "http://13.68.199.3/exactdata/api/v1/datapoints"
-config["api"]["datapoints"] = "https://data.exactspace.co/exactdata/api/v1/datapoints"
-config["type"] = "manual"
+# print("Manually importing configs...")
+# config = {"api":{}}
+# config["BROKER_ADDRESS"] = "data.exactspace.co"
+# # config["BROKER_ADDRESS"] = "40.76.30.102"
+# # config["BROKER_ADDRESS"] = "54.151.215.163"
+# config["api"]["meta"] = "https://data.exactspace.co/exactapi"
+# # config["api"]["query"] = "http://13.68.199.3/api/v1/datapoints/query"
+# config["api"]["query"] = "https://data.exactspace.co/api/v1/datapoints/query"
+# # config["api"]["datapoints"] = "http://13.68.199.3/exactdata/api/v1/datapoints"
+# config["api"]["datapoints"] = "https://data.exactspace.co/exactdata/api/v1/datapoints"
+# config["type"] = "manual"
 
 # Open the JSON file in read mode
 with open('mainConfig.json', 'r') as f:
