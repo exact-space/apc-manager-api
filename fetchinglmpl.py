@@ -24,20 +24,16 @@ elif version == "2":
 config = cfg.getconfig()
 
 print("Manually importing configs...")
-# config = {"api":{}}
-# config["BROKER_ADDRESS"] = "data.exactspace.co"
-# # config["BROKER_ADDRESS"] = "40.76.30.102"
-# # config["BROKER_ADDRESS"] = "54.151.215.163"
-# config["api"]["meta"] = "https://data.exactspace.co/exactapi"
-# # config["api"]["query"] = "http://13.68.199.3/api/v1/datapoints/query"
-# config["api"]["query"] = "https://data.exactspace.co/api/v1/datapoints/query"
-# # config["api"]["datapoints"] = "http://13.68.199.3/exactdata/api/v1/datapoints"
-# config["api"]["datapoints"] = "https://data.exactspace.co/exactdata/api/v1/datapoints"
-# config["type"] = "manual"
-# config = {"api":{"meta":"http://10.1.0.10/exactapi","datapoints":"http://10.224.0.11:8080/api/v1/datapoints","query":"http://10.1.0.10:8080/api/v1/datapoints/query","model":"http://10.1.0.10/model/","prediction":"http://10.1.0.10/prediction","fcm_send":"https://fcm.googleapis.com/fcm/send","efficiency":"http://10.1.0.10/efficiency/","service":"http://10.1.0.10/service","public_datacenter_url":"https://data.exactspace.co/","batchefficiency":"http://10.1.0.10/batchefficiency/"},"telegram":{"exop":{"chat-id":-338678250},"exgp":{"chat-id":-258556807},"dev":{"chat-id":570011002},"h_renu_u5":{"chat-id":-338678250},"token":"653055207:AAGqtEOTIhc8ndVb13eEA3bMJivVwfKoqqo"},"email":{"AWS_ACCESS_KEY":"","AWS_SECRET_KEY":""},"smtp":{},"timeZone":5.5,"loadBucketSize":10,"loadTagLimit":50,"modelBucketSize":"70","unitsId":"5c4ed3f5fe02914642b4d5bc","id":"5f0509402014f055dfd90c2e","spaceId":"prod","BROKER_ADDRESS":"10.1.0.10","FCM_SERVER_KEY":"AAAAbLfsn9k:APA91bGqVp-WKaZyt1fkzDpQmcvZQh7SCMrNgqjtjIC3LvV4lr5NMIpGi36lVm3-og9QZbOpgOvTS2rUleVKroZmlKo2uWU3BAinZ0vGrYDdHmzv_LfGrmD1CVyqtecUHO-zS5UEr6pb","service_ports":{"tasks":65535,"profiles":65534,"rotary-assets-pm":10193,"rotary-assets-runcycles":10177,"rotary-assets-condition":10388,"rotary-assets-overview":10679},"activity_types":["task","generic","chat"],"activity_types_debug":["task","generic","chat","task_debug","generic_debug","chat_debug"],"BROKER_PASSWORD":"iota#re-mqtt39","BROKER_USERNAME":"ES-MQTT","LS_PREFIX":"prod","prodAppstoreUrl":"https://apps.apple.com/app/pulse-data/id1673266794","prodPlaystoreUrl":"https://play.google.com/store/apps/details?id=com.pulsedata","appstoreUrl":"https://apps.apple.com/app/pulse-data/id1673266794","playstoreUrl":"https://play.google.com/store/apps/details?id=com.pulsedata","launch":{}}
-# config["api"]["meta"] = config["api"]["meta"].replace("10.0.0.14","10.36.44.48")
-# config["api"]["query"] = config["api"]["query"].replace("10.0.0.14","10.36.44.48")
-
+config = {"api":{}}
+config["BROKER_ADDRESS"] = "data.exactspace.co"
+# config["BROKER_ADDRESS"] = "40.76.30.102"
+# config["BROKER_ADDRESS"] = "54.151.215.163"
+config["api"]["meta"] = "https://data.exactspace.co/exactapi"
+# config["api"]["query"] = "http://13.68.199.3/api/v1/datapoints/query"
+config["api"]["query"] = "https://data.exactspace.co/api/v1/datapoints/query"
+# config["api"]["datapoints"] = "http://13.68.199.3/exactdata/api/v1/datapoints"
+config["api"]["datapoints"] = "https://data.exactspace.co/exactdata/api/v1/datapoints"
+config["type"] = "manual"
 
 # Open the JSON file in read mode
 with open('mainConfig.json', 'r') as f:
@@ -453,7 +449,13 @@ class fetching():
             finalDF['time'] = dates
             # finalDF = finalDF[["time"] + tagList]
             finalDF.drop(["year"],axis = 1,inplace=True)
-            # print(finalDF)
+            # finalDF.clip(lower=0)
+            # finalDF[finalDF<0]=0
+            # num = finalDF.select_dtypes(include=np.number).columns.tolist()
+            # finalDF[finalDF[num] < 0] = 0
+            # print(finalDF.info())
+            num = finalDF._get_numeric_data()
+            num[num < 0] = 0
             return finalDF.round(2)
         
         except Exception as e:

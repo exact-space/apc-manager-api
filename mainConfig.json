@@ -73,5 +73,9 @@
     },
     "60eb2fab454596520b33e6db" : {
         "hundredRule" : false
+    },
+    "628dd242c78e4c5d0f3b90cf" : {
+        "hundredRule" : true,
+        "hundValue" : 100
     }
 }
